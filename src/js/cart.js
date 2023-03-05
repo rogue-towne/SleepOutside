@@ -7,18 +7,11 @@ function renderCartContents() {
 }
 
 // Remove from Cart Feature
-function itemRemoval() {
-  const item = document.getElementsByClassName("removeFromCart");
-  item.addEventListener("click", removeFromCart(item.Id));
-}
-
-function removeFromCart() {
-  const cartItems = (() => {
-    const cartItem = localStorage.getItem("so-cart");
-    return cartItem === null ? [] : getLocalStorage("so-cart");
-  })();
-  cartItems.push(this.product);
-  setLocalStorage("so-cart", cartItems);
+function removeFromCart(productId) {
+  const cartItems = getLocalStorage("so-cart");
+  let temp = cartItems.filter((item) => item.Id != productId);
+  setLocalStorage("so-cart", temp);
+  location.reload();
 }
 
 function cartItemTemplate(item) {
@@ -34,7 +27,7 @@ function cartItemTemplate(item) {
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
-  <span class="removeFromCart" data-id=${item.Id}>X</span>
+  <button class="removeFromCart" data-id=${item.Id}>X</button>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 
@@ -42,4 +35,9 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
-itemRemoval();
+// Remove from Cart Feature
+document.querySelectorAll(".removeFromCart").forEach((item) => {
+  item.addEventListener("click", () =>
+    removeFromCart(item.getAttribute("data-id"))
+  );
+});
