@@ -1,4 +1,4 @@
-import { setLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 function productDetailsTemplate(product) {
   return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
@@ -34,16 +34,16 @@ export default class ProductsDetails{
        .getElementById("addToCart")
        .addEventListener("click", this.addToCart.bind(this));
    }
-    addProductToCart(product) {
+    addToCart() {
         const cartItems = (() => {
           const cartItem = localStorage.getItem("so-cart");
           return cartItem === null ? [] : getLocalStorage("so-cart");
         })();      
-        cartItems.push(product);
+        cartItems.push(this.product);
         setLocalStorage("so-cart", cartItems);
     }
     
-    renderProductDetails(){
+    renderProductDetails(selector){
       const element = document.querySelector(selector);
     element.insertAdjacentHTML(
       "afterBegin",
