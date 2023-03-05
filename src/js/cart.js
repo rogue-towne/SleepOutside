@@ -1,9 +1,24 @@
-import { getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+}
+
+// Remove from Cart Feature
+function itemRemoval() {
+  const item = document.getElementsByClassName("removeFromCart");
+  item.addEventListener("click", removeFromCart(item.Id));
+}
+
+function removeFromCart() {
+  const cartItems = (() => {
+    const cartItem = localStorage.getItem("so-cart");
+    return cartItem === null ? [] : getLocalStorage("so-cart");
+  })();
+  cartItems.push(this.product);
+  setLocalStorage("so-cart", cartItems);
 }
 
 function cartItemTemplate(item) {
@@ -19,6 +34,7 @@ function cartItemTemplate(item) {
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
+  <span class="removeFromCart" data-id=${item.Id}>X</span>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 
@@ -26,3 +42,4 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
+itemRemoval();
