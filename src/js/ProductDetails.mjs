@@ -5,7 +5,7 @@ function productDetailsTemplate(product) {
     <h2 class="divider">${product.NameWithoutBrand}</h2>
     <img
       class="divider"
-      src="${product.Image}"
+      src="${product.Images.PrimaryLarge}"
       alt="${product.NameWithoutBrand}"
     />
     <p class="product-card__price">$${product.FinalPrice}</p>
@@ -35,14 +35,23 @@ export default class ProductsDetails{
        .addEventListener("click", this.addToCart.bind(this));
    }
     addToCart() {
-        const cartItems = (() => {
-          const cartItem = localStorage.getItem("so-cart");
+        let cartItems = (() => {
+          let cartItem = localStorage.getItem("so-cart");
           return cartItem === null ? [] : getLocalStorage("so-cart");
-        })();      
-        cartItems.push(this.product);
+        })();
+        const cartMatch = cartItems.filter((item) => item.Id == this.productId);
+        if (cartMatch.length == 1){
+          let quantity = cartMatch[0].Quantity;
+          cartMatch[0].Quantity = quantity + 1;
+          cartItems = cartItems.filter((item) => item.Id != this.productId);
+          cartItems.push(cartMatch[0]);
+        } else {
+          this.product.Quantity = 1;
+          cartItems.push(this.product);
+        }
         setLocalStorage("so-cart", cartItems);
-    }
-    
+      }    
+      
     renderProductDetails(selector){
       const element = document.querySelector(selector);
     element.insertAdjacentHTML(

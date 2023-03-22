@@ -60,7 +60,14 @@ export async function loadHeaderFooter(){
   const headerElement = document.getElementById("header");
   const footerTemplate = await loadTemplate("../partials/footer.html");
   const footerElement = document.getElementById("footer");
+  
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
+
+  const cartLink = document.getElementById("cartLink");
+  cartLink.setAttribute("href", location.origin + "/cart/index.html");
+
+  const homeIconLink = document.getElementById("homeLink");
+  homeIconLink.setAttribute("href", location.origin)
 }
 
