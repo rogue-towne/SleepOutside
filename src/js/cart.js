@@ -28,9 +28,14 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: ${item.Quantity}</p>
+  <span class="cart-card__quantity">Qty: 
+    <input type="hidden" value="${item.Quantity}">
+    <input type="hidden" value="${item.FinalPrice}">
+    <input min="1" max="20" id="quantity" class="quantity" name="quantity" type="number" value="${item.Quantity}" required>
+    <p class="cart-card__price">$${item.AggregatePrice}</p>
+  </span>
   <button class="removeFromCart" data-id=${item.Id}>X</button>
-  <p class="cart-card__price">$${item.Quantity * item.FinalPrice}</p>
+  
 </li>`;
 
   return newItem;
@@ -42,4 +47,30 @@ document.querySelectorAll(".removeFromCart").forEach((item) => {
   item.addEventListener("click", () =>
     removeFromCart(item.getAttribute("data-id"))
   );
+});
+
+// Allow user to change cart item quantity
+const quantities = document.querySelectorAll(".quantity");
+quantities.forEach((quantity) => {
+  quantity.onchange = function () {
+    var aggregatePrice = quantity.nextElementSibling;
+    var initialPrice = quantity.previousElementSibling;
+    var initialQuantity = initialPrice.previousElementSibling;
+
+    if (quantity.value > 0 && quantity.value != "") {
+      aggregatePrice.textContent =
+        "$" + (initialPrice.value * quantity.value).toFixed(2);
+    } else {
+      quantity.value = initialQuantity.value;
+    }
+  };
+
+  quantity.onkeyup = function () {
+    var aggregatePrice = quantity.nextElementSibling;
+    var initialPrice = quantity.previousElementSibling;
+    if (quantity.value > 0 && quantity.value != "") {
+      aggregatePrice.textContent =
+        "$" + (initialPrice.value * quantity.value).toFixed(2);
+    }
+  };
 });

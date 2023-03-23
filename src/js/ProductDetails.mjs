@@ -43,12 +43,15 @@ export default class ProductsDetails{
         if (cartMatch.length == 1){
           let quantity = cartMatch[0].Quantity;
           cartMatch[0].Quantity = quantity + 1;
+          cartMatch[0].AggregatePrice = cartMatch[0].Quantity * cartMatch[0].FinalPrice;
           cartItems = cartItems.filter((item) => item.Id != this.productId);
-          cartItems.push(cartMatch[0]);
+          cartItems.push(cartMatch[0]);         
         } else {
           this.product.Quantity = 1;
+          this.product.AggregatePrice = this.product.Quantity * this.product.FinalPrice;
           cartItems.push(this.product);
         }
+        
         setLocalStorage("so-cart", cartItems);
       }    
       
