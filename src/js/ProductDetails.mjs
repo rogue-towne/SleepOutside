@@ -43,7 +43,7 @@ export default class ProductsDetails{
         if (cartMatch.length == 1){
           let quantity = cartMatch[0].Quantity;
           cartMatch[0].Quantity = quantity + 1;
-          cartMatch[0].AggregatePrice = cartMatch[0].Quantity * cartMatch[0].FinalPrice;
+          cartMatch[0].AggregatePrice = (cartMatch[0].Quantity * cartMatch[0].FinalPrice).toFixed(2);
           cartItems = cartItems.filter((item) => item.Id != this.productId);
           cartItems.push(cartMatch[0]);         
         } else {
