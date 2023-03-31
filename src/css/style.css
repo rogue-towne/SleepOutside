@@ -28,7 +28,14 @@ img {
 header {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
+  /* padding: 0 10px; */
+}
+.hide {
+  display: none;
+}
+.success {
+  
+  background-color: green;
 }
 .logo {
   line-height: 60px;
@@ -46,6 +53,26 @@ header {
 .logo a {
   text-decoration: none;
   color: var(--font-body);
+}
+
+@keyframes blink {
+  0% {
+      opacity: 1;
+  }
+49% {
+  opacity: 1
+}
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 0;
+  }
+}
+.addItemAnimation {
+  animation: blink .3s;
+  animation-iteration-count: 3;
+  filter: invert(50%) sepia(64%) saturate(2654%) hue-rotate(78deg) brightness(108%) contrast(106%);
 }
 .hero {
   position: relative;

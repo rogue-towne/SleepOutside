@@ -53,8 +53,21 @@ export default class ProductsDetails{
         }
         
         setLocalStorage("so-cart", cartItems);
+        this.activateCartAnimation();
       }    
       
+    activateCartAnimation(){
+      const cartIcon = document.querySelector(".cart");
+      const successMessage = document.querySelector(".success");
+      cartIcon.classList.add("addItemAnimation");  
+      successMessage.classList.remove("hide");
+      window.scrollTo(0, 0);
+      setTimeout(() => {
+        cartIcon.classList.remove("addItemAnimation"); 
+        successMessage.classList.add("hide");
+      
+      }, 5000);
+    }
     renderProductDetails(selector){
       const element = document.querySelector(selector);
     element.insertAdjacentHTML(
