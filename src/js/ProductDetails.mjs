@@ -55,7 +55,7 @@ export default class ProductsDetails{
         setLocalStorage("so-cart", cartItems);
         this.activateCartAnimation();
       }    
-      
+      // Add item to cart animation
     activateCartAnimation(){
       const cartIcon = document.querySelector(".cart");
       const successMessage = document.querySelector(".success");
